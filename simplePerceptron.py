@@ -8,7 +8,6 @@
 #############################################################################################
 
 import random, copy
-import os
 
 class Simple_Perceptron:
 
@@ -146,7 +145,7 @@ if __name__ == "__main__":
 	simplePerceptron.treinar()
 
 	print("\n\n######################## TREINAMENTO FINALIZADO ############################\n")
-	print("\n\n#################### FASE DE TESTES ####################\n")
+	print("\n#################### FASE DE TESTES ####################\n")
 
 	while(True):
 
@@ -161,10 +160,9 @@ if __name__ == "__main__":
 
 		resp = input("\nDeseja fazer outro teste? < y : n >")
 
+		print("\n##########################################################\n")
+
 		if(resp == 'n' or resp == 'N'):
 			break
 
-		os.system('cls' if os.name == 'nt' else 'clear')
-		print("\n\n#################### FASE DE TESTES ####################\n")
-
-	print("\n\n##########################################################")
+	print("\n\n#####################> BYE <###################################")
