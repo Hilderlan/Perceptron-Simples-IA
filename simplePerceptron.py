@@ -8,6 +8,7 @@
 #############################################################################################
 
 import random, copy
+import os
 
 class Simple_Perceptron:
 
@@ -28,10 +29,6 @@ class Simple_Perceptron:
 		# Adiciona 1 para cada uma das amostras, bem no inicio, referente ao valor do bias que eh fixo
 		for amostra in self.amostras:
 			amostra.insert(0, 1)	# No caso, cada entrada passara a ter 3 valores, (1, v1, v2), onde o 1 eh o valor do Bias
-
-		# Inicia o vetor de pesos com valores aleatórios, caso o usuario nao tenha definido
-#		for i in range(len(amostras)):
-#			self.pesos.append(random.random())	# Pesos setados entre 0 e 1
 
 		# Insere o peso do Bias no inicio da lista de pesos
 		self.pesos.insert(0, self.peso_bias)
@@ -90,7 +87,7 @@ class Simple_Perceptron:
 		print(f"Quantidade de epocas necessarias: {num_epocas}\n\nPesos finais: {self.pesos}")
 
 
-	def testar(self, amostra):
+	def testar(self, amostra, jogador):
     		
 		# Insere 0 no inicio de cada entrada novamente
 		amostra.insert(0, 1)
@@ -101,13 +98,12 @@ class Simple_Perceptron:
 			u += self.pesos[i] * amostra[i]
 
 		y = self.funcao_de_ativacao(u)
-#		print(f"\nFuncao de ativacao: {y}\n")
 
 		# Verifica a qual classe o jogador pertence
 		if y == 0:	 # Futebol
-			print(f'\n  -> A entrada {amostra} pertence a classe Futebol')
+			print(f'\n  -> O jogador {jogador} pertence a classe Futebol!')
 		elif y == 1: # Tenis
-			print(f'\n  -> A entrada {amostra} pertence a classe Tenis')
+			print(f'\n  -> O jogador {jogador} pertence a classe Tenis!')
 
 
 	# Funcao de ativacao: degrau
@@ -117,11 +113,13 @@ class Simple_Perceptron:
 if __name__ == "__main__":
     	
 	# Amostras que serao treinadas no Simple Perceptron
-	amostras = [[1.0, 1.0,], # Nadal 	(Tenis)
+	amostras = [[1.0, 1.0], # Nadal 	(Tenis)
 				[0.0, 1.0], # Gabriel	(Futebol)
 				[1.0, 0.0],	# Federer	(Tenis)
 				[0.0, 0.0]	# Neymar	(Futebol)
 				]
+
+	dict = {"00": "Neymar", "01": "Gabriel", "10": "Federer", "11": "Nadal"}
 
 	# Saidas desejadas de cada uma das amostras definidas
 	saidas = [1, 0, 1, 0]	# Respectivamente: tenis, futebol, tenis, futebol
@@ -133,7 +131,7 @@ if __name__ == "__main__":
 	print("########################### Simple Perceptron ########################\n")
 
 	for i in range(len(amostras[0])):
-		pesos.append(float(input(f"\nDigite o peso da entrada {amostras[i]}: ")))
+		pesos.append(float(input(f"\nDigite o peso da entrada {i+1}: ")))
 	
 	peso_bias = float(input("\nDigite o peso do Bias: "))
 
@@ -143,10 +141,30 @@ if __name__ == "__main__":
 	
 	simplePerceptron = Simple_Perceptron(amostras=amostras, saidas=saidas, pesos=pesos, taxa_aprendizado=taxa_aprendizado, epocas=1000, peso_bias=peso_bias, limiar=limiar)
 
+	print("\n######################## TREINANDO A REDE ############################\n")
+
 	simplePerceptron.treinar()
 
-	print("\n\n#################### FASE DE TESTE ####################\n")
-	for teste in testes:
-		simplePerceptron.testar(teste)
+	print("\n\n######################## TREINAMENTO FINALIZADO ############################\n")
+	print("\n\n#################### FASE DE TESTES ####################\n")
+
+	while(True):
+
+		for k,v in dict.items():
+			print(k, " - ", v)
+
+		inp = input("\nEscolha a entrada: ")
+		
+		listInput = [int(inp[0]), int(inp[1])]
+
+		simplePerceptron.testar(listInput, dict[str(inp[0]) + str(inp[1])])
+
+		resp = input("\nDeseja fazer outro teste? < y : n >")
+
+		if(resp == 'n' or resp == 'N'):
+			break
+
+		os.system('cls' if os.name == 'nt' else 'clear')
+		print("\n\n#################### FASE DE TESTES ####################\n")
 
 	print("\n\n##########################################################")
