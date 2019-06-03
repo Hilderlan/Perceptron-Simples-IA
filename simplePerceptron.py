@@ -101,10 +101,13 @@ class Simple_Perceptron:
 
 		# Verifica a qual classe o jogador pertence
 		if y == 0:	 # Futebol
-			print(f'\n  -> O jogador {jogador} pertence a classe Futebol!')
-		elif y == 1: # Tenis
-			print(f'\n  -> O jogador {jogador} pertence a classe Tenis!')
+			strJogador = f"  -> O jogador {jogador} pertence a classe Futebol!"
 
+		elif y == 1: # Tenis
+			strJogador = f"  -> O jogador {jogador} pertence a classe Tenis!"
+
+		print(strJogador)
+		return strJogador
 
 	# Funcao de ativacao: degrau
 	def funcao_de_ativacao(self, u):
