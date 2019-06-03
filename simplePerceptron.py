@@ -8,6 +8,7 @@
 #############################################################################################
 
 import random, copy
+import interface
 
 class Simple_Perceptron:
 
@@ -42,9 +43,9 @@ class Simple_Perceptron:
 			erro = False # Ja que erro eh uma das condicoes de parada
 
 			# Para cada uma das entradas (amostras de treinamento)
-			for i in range(len(amostras)):
+			for i in range(len(self.amostras)):
     				
-				print(f"\n-> Para a entrada {amostras[i]}\n")
+				print(f"\n-> Para a entrada {self.amostras[i]}\n")
 
 				u = 0	# Parametro para a funcao de ativacao
 
@@ -110,59 +111,5 @@ class Simple_Perceptron:
 		return 1 if u >= self.limiar else 0
 
 if __name__ == "__main__":
-    	
-	# Amostras que serao treinadas no Simple Perceptron
-	amostras = [[1.0, 1.0], # Nadal 	(Tenis)
-				[0.0, 1.0], # Gabriel	(Futebol)
-				[1.0, 0.0],	# Federer	(Tenis)
-				[0.0, 0.0]	# Neymar	(Futebol)
-				]
-
-	dict = {"00": "Neymar", "01": "Gabriel", "10": "Federer", "11": "Nadal"}
-
-	# Saidas desejadas de cada uma das amostras definidas
-	saidas = [1, 0, 1, 0]	# Respectivamente: tenis, futebol, tenis, futebol
-
-	testes = copy.deepcopy(amostras)
-
-	pesos = []
-
-	print("########################### Simple Perceptron ########################\n")
-
-	for i in range(len(amostras[0])):
-		pesos.append(float(input(f"\nDigite o peso da entrada {i+1}: ")))
-	
-	peso_bias = float(input("\nDigite o peso do Bias: "))
-
-	taxa_aprendizado = float(input("\nDigite a taxa de aprendizado (Neta): "))
-
-	limiar = float(input("\nDigite o limiar de ativacao: "))
-	
-	simplePerceptron = Simple_Perceptron(amostras=amostras, saidas=saidas, pesos=pesos, taxa_aprendizado=taxa_aprendizado, epocas=1000, peso_bias=peso_bias, limiar=limiar)
-
-	print("\n######################## TREINANDO A REDE ############################\n")
-
-	simplePerceptron.treinar()
-
-	print("\n\n######################## TREINAMENTO FINALIZADO ############################\n")
-	print("\n#################### FASE DE TESTES ####################\n")
-
-	while(True):
-
-		for k,v in dict.items():
-			print(k, " - ", v)
-
-		inp = input("\nEscolha a entrada: ")
-		
-		listInput = [int(inp[0]), int(inp[1])]
-
-		simplePerceptron.testar(listInput, dict[str(inp[0]) + str(inp[1])])
-
-		resp = input("\nDeseja fazer outro teste? < y : n >")
-
-		print("\n##########################################################\n")
-
-		if(resp == 'n' or resp == 'N'):
-			break
-
+	interface.inicializar()
 	print("\n\n#####################> BYE <###################################")
